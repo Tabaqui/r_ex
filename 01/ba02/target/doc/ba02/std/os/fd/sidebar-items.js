@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["STDERR","STDIN","STDOUT"],"struct":["BorrowedFd","OwnedFd"],"trait":["AsFd","AsRawFd","FromRawFd","IntoRawFd"],"type":["RawFd"]};

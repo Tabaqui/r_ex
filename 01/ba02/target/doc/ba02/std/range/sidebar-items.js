@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["legacy"],"struct":["Range","RangeFrom","RangeFromIter","RangeInclusive","RangeInclusiveIter","RangeIter","RangeToInclusive"]};
