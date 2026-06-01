@@ -6,16 +6,16 @@ main:
   pushq %rbp
   movq %rsp, %rbp
   
-  movq $47, %rdx
+  movq $12, %rdx
+  
   movq $0, %rax
   movq $1, %rbx
-
   xorq %rcx, %rcx
   
   cmpq $1, %rdx
   je L0
 
-  LOOP:
+LOOP:
   movq %rbx, %rcx
   
   cmpq $2, %rdx
@@ -30,7 +30,7 @@ main:
   cmpq $1, %rdx
   jne LOOP
 
-  L0:
+L0:
   leaq out(%rip), %rdi
   movq %rcx, %rsi
 
