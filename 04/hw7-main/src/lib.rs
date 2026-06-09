@@ -86,11 +86,6 @@ impl MyBufWriter {
     }
 
     pub fn write_buffered(&mut self, data: &[u8]) -> io::Result<()> {
-        if self.buff.len() > 0 {
-            self.file.write(&self.buff)?;
-            self.buff.clear();
-        }
-
         data.iter().for_each(|s| {
             self.buff.push(*s);
             if self.buff.len() == BUFFER_SIZE {
@@ -167,6 +162,7 @@ pub fn copy_fast(input: impl AsRef<Path>, output: impl AsRef<Path>) -> io::Resul
     let mut copied = 0;
     
     while let Some(byte) = reader.read_byte()? {
+
         writer.write_buffered(&[byte])?;
         copied += 1;
     }
