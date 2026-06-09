@@ -6,7 +6,6 @@ use std::{
 
 pub const BUFFER_SIZE: usize = 64 * 1024;
 
-// pub const BUFFER_SIZE: usize = 8;
 
 // -----------------------------------------------------------------------------
 // MyBufReader
@@ -57,7 +56,6 @@ impl MyBufReader {
 
         Ok(Some(next_byte))
 
-        // unimplemented!("реализуйте чтение одного байта через внутренний буфер")
     }
 }
 
@@ -89,14 +87,14 @@ impl MyBufWriter {
 
     pub fn write_buffered(&mut self, data: &[u8]) -> io::Result<()> {
         if self.buff.len() > 0 {
-            self.file.write_all(&self.buff)?;
+            self.file.write(&self.buff)?;
             self.buff.clear();
         }
 
         data.iter().for_each(|s| {
             self.buff.push(*s);
             if self.buff.len() == BUFFER_SIZE {
-                if let Err(_) = self.file.write_all(&self.buff) {
+                if let Err(_) = self.file.write(&self.buff) {
                     return;
                 };
                 self.buff.clear();
@@ -173,7 +171,6 @@ pub fn copy_fast(input: impl AsRef<Path>, output: impl AsRef<Path>) -> io::Resul
         copied += 1;
     }
 
-println!("cc {copied}");
     Ok(copied)
 }
 

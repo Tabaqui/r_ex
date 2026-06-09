@@ -216,6 +216,16 @@ fn copy_fast_handles_large_file() -> io::Result<()> {
     Ok(())
 }
 
+#[test]
+fn a() {
+    let mut a : Vec<u32> = Vec::with_capacity(100);
+    a.push(1);
+    a.clear();
+        let b = a.len();
+
+    println!("{b}");
+}
+
 fn temp_file_path(name: &str) -> std::path::PathBuf {
     let mut path = std::env::temp_dir();
 
