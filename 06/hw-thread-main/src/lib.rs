@@ -46,17 +46,17 @@ impl ThreadPool {
 
     /// Add one number to the work queue.
     pub fn execute(&self, num: i64) {
-        let mut st = self.shared.state.lock().expect("u'd be ok");
-        st.queue.push(num);
-        drop(st);
+        let mut state = self.shared.state.lock().expect("u'd be ok");
+        state.queue.push(num);
+        drop(state);
         self.shared.has_work.notify_one();
     }
 
     /// Finish all queued work and stop all workers.
     pub fn shutdown(self) {
-        let mut st = self.shared.state.lock().expect("u'd be ok");
-        st.shutting_down = true;
-        drop(st);
+        let mut state = self.shared.state.lock().expect("u'd be ok");
+        state.shutting_down = true;
+        drop(state);
         self.shared.has_work.notify_all();
         self.handles.into_iter().for_each(|h| h.join().expect("u'd be ok"));
     }
@@ -95,15 +95,15 @@ impl State {
 fn do_task(sh: Arc<Shared>, task: Task) {
     loop {
         let maybe_item = {
-            let mut st = sh.state.lock().expect("u'd be ok");
+            let mut state = sh.state.lock().expect("u'd be ok");
 
-            while st.queue.is_empty() && !st.shutting_down {
-                st = sh.has_work.wait(st).expect("u'd be ok");
+            while state.queue.is_empty() && !state.shutting_down {
+                state = sh.has_work.wait(state).expect("u'd be ok");
             }
 
-            if let Some(item) = st.queue.pop() {
+            if let Some(item) = state.queue.pop() {
                 Some(item)
-            } else if st.shutting_down {
+            } else if state.shutting_down {
                 None
             } else {
                 continue;
