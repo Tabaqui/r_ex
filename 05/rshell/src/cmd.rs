@@ -8,21 +8,21 @@ const CMD_ERR_MSG: &str = "Command error!";
 
 pub struct CmdGroup {
     cmd: String,
-    args: Option<String>,
+    args: Vec<String>,
 }
 
 impl CmdGroup {
     pub fn new(value: String) -> Result<Self, CmdError> {
         let mut cmd_array = value.split_ascii_whitespace();
         let cmd = cmd_array.next().ok_or(CmdError::NotRecognized)?;
-        let args = cmd_array.next().map(|s| s.to_string());
+        let args: Vec<String> = cmd_array.map(|s| s.to_string()).collect();
         Ok(Self {
             cmd: cmd.to_string(),
             args,
         })
     }
 
-    fn spawn(cmd: String, args: Option<String>, stdin: Stdio) -> Result<Child, CmdError> {
+    fn spawn(cmd: String, args: Vec<String>, stdin: Stdio) -> Result<Child, CmdError> {
         Command::new(cmd)
             .args(args)
             .stdout(Stdio::piped())
