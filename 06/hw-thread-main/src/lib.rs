@@ -71,10 +71,10 @@ struct Shared {
 impl Shared {
     fn new(size: usize) -> Self {
         let shared = Mutex::new(State::new(size));
-        let h_v = Condvar::new();
+        let has_work = Condvar::new();
         Self {
             state: shared,
-            has_work: h_v,
+            has_work,
         }
     }
 }
@@ -94,7 +94,7 @@ impl State {
 
 fn do_task(sh: Arc<Shared>, task: Task) {
     loop {
-        let m_i = {
+        let maybe_item = {
             let mut st = sh.state.lock().expect("u'd be ok");
 
             while st.queue.is_empty() && !st.shutting_down {
@@ -110,8 +110,8 @@ fn do_task(sh: Arc<Shared>, task: Task) {
             }
         };
 
-        match m_i {
-            Some(num) => task(num),
+        match maybe_item {
+            Some(item) => task(item),
             None => break,
         }
     }
