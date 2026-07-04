@@ -21,6 +21,7 @@ impl Pole {
         } else {
             an_answer.len() + GAP
         };
+        
         Ok(Self {
             the_answer: an_answer,
             indices: HashSet::new(),
