@@ -5,6 +5,7 @@ use std::{assert_matches, io};
 
 const GAP: usize = 3;
 
+/// Pole has GAP to adjust attempts left
 pub struct Pole {
     the_answer: String,
     indices: HashSet<usize>,
@@ -111,7 +112,6 @@ pub fn lower_single(symbols: &str) -> Result<char, io::Error> {
     }
 }
 
-/// Pole has GAP to adjust attempts left
 #[test]
 fn single() {
     let the_answer = String::from("hang");
@@ -217,6 +217,6 @@ fn pole_out() {
     assert_eq!(a, String::from("_ _ _ _"));
     
     pole.try_next(next).unwrap();
-    
+
     assert!(pole.show() == "H _ _ _");
 }
