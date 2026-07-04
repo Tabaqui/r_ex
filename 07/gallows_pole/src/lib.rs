@@ -63,10 +63,6 @@ impl Pole {
         Ok(())
     }
 
-    pub fn is_hanged(&self) -> bool {
-        self.hist.len() >= self.the_answer.len()
-    }
-
     pub fn show(&self) -> String {
         let out: Vec<_> = self
             .the_answer
