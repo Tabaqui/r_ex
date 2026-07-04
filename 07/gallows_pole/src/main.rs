@@ -32,7 +32,7 @@ fn main() {
                         PoleError::Done(word) => {
                             println!("> {word} <");
                             if word == String::from("H a n g m a n") {
-                                println!("\nHangman! Hangman! Hold on a little while... I think my friends coming riding many miles...")
+                                println!("\nHangman! Hangman! Hold it a little while... I think my friends coming riding many a mile...")
                             }
                             println!("\nCongrats! Tryed harder enough.\n");
                             println!("Please come again.");
