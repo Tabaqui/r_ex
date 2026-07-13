@@ -78,10 +78,10 @@ impl<'a, T> Iterator for MyVecIter<'a, T> {
             return None;
         }
 
-        let a = self.vec.get(self.pos);
+        let next = self.vec.get(self.pos);
         self.pos += 1;
 
-        a
+        next
     }
 }
 
